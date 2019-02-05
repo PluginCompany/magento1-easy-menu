@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of Easy Menu, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="notifications">
+            <block type="plugincompany_notifications/notifications" name="plugincompany_notifications"
+                   as="plugincompany_notifications"
+                   template="plugincompany/notifications/notifications.phtml"></block>
+        </reference>
+    </default>
+</layout>

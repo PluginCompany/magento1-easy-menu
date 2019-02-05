@@ -1,0 +1,1095 @@
+<?php
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of Easy Menu, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+?>
+<style type="text/css">
+    .placeholder {
+        outline: 1px dashed #4183C4;
+        /*-webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin: -1px;*/
+    }
+
+    .sortable>.placeholder {display:none;}
+
+
+    .mjs-nestedSortable-error {
+        background: #fbe3e4;
+        border-color: transparent;
+        display:none;
+    }
+
+    ol {
+        margin: 0;
+        padding: 0;
+    }
+
+    ol.sortable, ol.sortable ol {
+        margin: 0 0 0 0;
+        padding: 0;
+        list-style-type: none;
+        padding-left:25px;
+    }
+
+    ol.sortable {
+
+    }
+
+    .sortable li {
+        margin: 5px 0 0 0;
+        padding: 0;
+
+    }
+
+    .sortable li div  {
+        border: 1px solid #d4d4d4;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
+        padding: 4px;
+        margin: 0;
+        cursor: move;
+        background: #f6f6f6;
+        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+        background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+        background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+        background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
+    }
+
+    .sortable li.mjs-nestedSortable-branch div {
+        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
+
+    }
+
+    .sortable li.mjs-nestedSortable-leaf div {
+    /*    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);*/
+
+    }
+
+    li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
+        border-color: #999;
+        background: #fafafa;
+    }
+
+    .disclose {
+        cursor: pointer;
+        width: 10px;
+        display:none;
+    }
+
+    .sortable li.mjs-nestedSortable-collapsed > ol {
+        display: none;
+    }
+
+    .sortable li.mjs-nestedSortable-branch > div > .disclose {
+        display: inline-block;
+    }
+
+    .sortable li.mjs-nestedSortable-collapsed > div > .disclose > span:before {
+        content: '+ ';
+    }
+
+    .sortable li.mjs-nestedSortable-expanded > div > .disclose > span:before {
+        content: '- '50;
+    }
+    .cmspages,.categories, .customlinks {width:90%;float:left;clear:left;}
+    .menu {width:99%;float:right;}
+    #smenu {/*height:400px;overflow:auto;*/padding-right:20px;}
+    .psort>div {
+        background: -moz-linear-gradient(top, #efefef 0%, #666 10%, #000 100%)!important;
+        background: white!important;
+        color: rgb(77, 77, 77);
+    }
+    .controls {
+        text-align: right;
+        padding: 0px;
+        margin-top: -45px;
+        margin-bottom: 20px;
+        margin-right:10px;
+    }
+    .info {
+        padding: 10px;
+        background: #fff9e9;
+        border: 1px solid #eee2be;
+        margin-bottom:10px;
+    }
+    .sortablediv {
+        float: left;
+        background: #fefefe;
+        padding-bottom: 10px;
+        width: 40%;
+        border:0px;
+        margin:0px;
+        padding:0px;
+    }
+
+    .inforight input {width:97%}
+    .mShowItemDetails {float:right;cursor:pointer;}
+    .mItemDetails {
+        background:#F2FFFE!important;
+        height: 0px;
+        display:none;
+        transition: height 0.5s;
+        width: 100%;
+        box-sizing:border-box;
+        border:0!important;
+        margin:0!important;
+        padding:0!important;
+        clear:both;
+        height:210px;
+    }
+    .mItemDetails div {
+        padding:20px!important;
+        box-sizing:border-box;
+        width:100%;
+        min-width:300px;
+        float:right;
+        clear:both;
+        border:1px solid #ccc;
+        background:#F2FFFE!important;
+        height:100%;
+        clear:both;
+    }
+
+    .mItemDetails table {
+        width:90%;
+    }
+
+    .mItemDetails table tr {
+        height:30px;
+    }
+
+    .mItemDetails table p {
+        margin-top:3px;
+    }
+
+    .mItemDetails input {
+        padding:2px;
+        width:100%;
+    }
+
+    .mItemDetails input.mrewrite {
+        width:auto;
+    }
+    .mItemDetails label {
+        font-weight:bold;
+        display:block;
+        margin-top:3px;
+    }
+    .itemsToAdd {float:left;width:59%;margin-right:1%;}
+    .itemsToAdd .entry-edit {clear:both;}
+    #categoryTab .entry-edit-head {display:none;}
+    .massaction .entry-edit {display:none;}
+    .addbuttons {
+        padding: 6px;
+        background: #FFF9E9;
+        border: 1px solid #EEE2BE;
+        width: 100%;
+        float: left;
+        clear: both;
+        box-sizing: border-box;
+        margin-bottom:16px;
+    }
+    .addbuttons button {float:right;}
+    .dropLocation {background:white!important;padding:2px;}
+    .droplink {color:orange;cursor:pointer;}
+
+    div.tbutton {
+        float: right;
+        padding: 2px!important;
+        margin-top: -3px!important;
+        padding-left: 5px!important;
+        padding-right: 5px!important;
+        color: white;
+        font-size: 14px;
+        cursor:pointer!important;;
+    }
+    div.tbutton.remove{
+        background: #FF5E5E!important;
+    }
+
+    div.tbutton.edit{
+        background: #5E97FF!important;
+    }
+
+    .tbuttonwrap {
+        position:absolute;
+        right:1px;
+        top:4px;
+        border: 0px!important;
+        background: none!important;
+        padding: 0!important;
+        margin: 0!important;
+    }
+
+    .menuitem>div {position:relative;}
+
+    #clinktbl {
+        min-width: 400px;
+        padding: 20px;
+        background: #FFF9E9;
+        border: 1px solid #EEE2BE;
+    }
+    #clinktbl tr {
+        height:26px;
+    }
+
+    #clinktbl input {
+        border: 1px solid #D2CCBA;
+        padding: 2px;
+    }
+
+    body {
+        overflow-y: scroll;
+    }
+    .magento_content {
+        background:white;
+    }
+    .massaction {display:none}
+
+    #cloneMenu {
+        padding: 3px;
+        border: 1px solid #CDDDDD;
+        background: #FFF;
+        display: inline-block;
+    }
+
+    <?php if(Mage::app()->isSingleStoreMode()){ ?>
+
+    .controls {
+        margin-top:0px;
+    }
+    #cloneMenu {
+        display:none;
+    }
+
+    <?php } ?>
+    
+    .input-addon {
+        position: absolute;
+        top: 0px;
+        right: -8px;
+        width: 22px;
+        display: block;
+        background: #a6bac1;
+        height: 22px;
+        padding-top: 2px;
+        box-sizing: border-box;
+        padding-left: 1px;
+    }
+</style>
+
+
+<div style="width:100%;">
+    <div style="width:59%;margin-right:1%;float:left;" class="content-header">
+        <h3 style="width:60%;">Select Menu Items</h3>
+    </div>
+    <div style="width:40%;float:left;" class="content-header">
+        <h3>Menu Section</h3>
+    </div>
+</div>
+
+<div class="itemsToAdd">
+    <div class="ionTabs" id="tabs_1" data-name="Tabs_Group_name">
+        <ul class="ionTabs__head">
+            <li class="ionTabs__tab" data-target="Tab_1_name">Categories</li>
+            <li class="ionTabs__tab" data-target="Tab_2_name">CMS Pages</li>
+            <li class="ionTabs__tab" data-target="Tab_3_name">Products</li>
+            <li class="ionTabs__tab" data-target="Tab_4_name">Custom Link</li>
+        </ul>
+        <div class="ionTabs__body">
+            <div id="categoryTab" class="ionTabs__item" data-name="Tab_1_name">
+                <div class="addbuttons">
+                    <button class="scalable add" type="button" onclick="addCategories()">
+                        <span>Add Selected Categories</span>
+                    </button>
+                </div>
+                <?php echo $this->getLayout()->createBlock('easymenu/adminhtml_categories_categories')->toHtml(); ?>
+            </div>
+            <div id="cmsPageTab" class="ionTabs__item" data-name="Tab_2_name">
+                <?php echo $this->getLayout()->createBlock('easymenu/adminhtml_cms_page_grid')->toHtml(); ?>
+            </div>
+            <div id="productsTab" class="ionTabs__item" data-name="Tab_3_name">
+                <?php echo $this->getLayout()->createBlock('easymenu/adminhtml_products_grid')->toHtml(); ?>
+            </div>
+            <div id="customLinkTab" class="ionTabs__item" data-name="Tab_4_name" style="padding-bottom:50px;">
+                <table id="clinktbl">
+                    <tr>
+                        <td><b>URL menu title</b></td>
+                        <td><input style="width:100%" id="cLinkTitle" /></td>
+                    </tr>
+                    <tr>
+                        <td><b>Full URL (incl. http://) </b></td>
+                        <td><input style="width:100%" id="cLinkUrl" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button class="scalable add" type="button" onclick="addCustomLink()">
+                                <span>Add Custom Link</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="ionTabs__preloader"></div>
+        </div>
+    </div>
+</div>
+<div class="info sortablediv">
+    <div id="addMessages" style="width:100%;height:40px"></div>
+    <ol id="mainsortable" class="sortable dontdrop">
+        <li id="smenu" class="menu psort scat scms scustom">
+            <div>Drag and drop the menu items below to move or rearrange them.</div>
+            <?php echo $this->getCurrentMenu(); ?>
+        </li>
+    </ol>
+</div>
+
+<span style="display:none">
+    <div class="nestedRewriteInfo">
+        <img src="<?php echo Mage::getBaseUrl('media');?>plugincompany/easymenu/nestedrewrites.png" style="float:left;margin:10px;" />
+        <div style="float:right;width:400px;margin-top:10px;margin-right:10px">
+            <h2>Nested URL Rewrites</h2>
+            <p>&nbsp;</p>
+            <p>If the 'Nested URL' box is ticked, a nested URL rewrite will be created in addition to the menu item's original URL.</p>
+            <p>&nbsp;</p>
+            <p>Nested URL rewrites are based on the item's menu position and are a great way to improve website usability and SEO.</p>
+            <p>&nbsp;</p>
+            <p>In the example on the left, the nested URL for the menu sub item would look as follows:</p>
+            <p><b>http://www.example.com/enable-cookies/private-sales/</b></p>
+        </div>
+    </div>
+</span>
+<span id="defaultCategories" style="display:none">
+    <?php echo $this->getCategories(); ?>
+</span>
+<script type="text/javascript">
+    var itemsToDrop;
+    var currentGrid;
+    var categoryDetails = {};
+    var productDetails = {};
+    var cmsPageDetails = {};
+    var categorySuffix = '<?php echo $this->getCategorySuffix();?>';
+
+    jQuery(document).ready(function(){
+        updateProductDetails();
+        updateCmsPageDetails();
+        updateCatagoryDetails();
+
+        jQuery('#loadStoreMenu')
+            .html(jQuery('#store_switcher').html())
+        ;
+        jQuery('#loadStoreMenu option[value=<?php echo $this->getStoreId();?>]').remove();
+
+        jQuery.ionTabs("#tabs_1");
+        jQuery('.disabled>div').unwrap().remove();
+        jQuery('.sortable').nestedSortable({
+            connectWith: ['#mainsortable','#customlinksortable'],
+            isAllowed: function(item,parent) {
+                if(parent == null) {
+                    return false;
+                }
+                if(jQuery(item[0]).hasClass('psort')){
+                    return false;
+                }
+                if(jQuery(parent[0]).hasClass('dontdrop')){
+                    return false;
+                }
+                var classname = jQuery(item[0]).attr('class');
+                if(!jQuery(parent[0]).hasClass(classname)){
+                    //     return false;
+                }
+
+                return true;
+            },
+            update: function( event, ui )
+            {
+                if(jQuery(ui['item']).hasClass('psort')) {
+                    return false;
+                }
+                if(jQuery(ui['item']).hasClass('scat') && jQuery(ui['item']).parents('#scms').length > 0 ) {
+                    if(jQuery(ui['item']).get(0).tagName == "OL") {
+                        jQuery(ui['item']).appendTo(jQuery('#scategories:eq(0)'));
+                    }else {
+                        jQuery(ui['item']).appendTo(jQuery('#scategories:eq(0)')).wrap('<ol />');
+                    }
+                }
+                if(jQuery(ui['item']).hasClass('scms') && jQuery(ui['item']).parents('#scategories').length > 0 ) {
+                    if(jQuery(ui['item']).get(0).tagName == "OL") {
+                        jQuery(ui['item']).appendTo(jQuery('#scms:eq(0)'));
+                    }else {
+                        jQuery(ui['item']).appendTo(jQuery('#scms:eq(0)')).wrap('<ol />');
+                    }
+                }
+
+            },
+
+            handle: 'div',
+            items: 'li',
+            tolerance: 'pointer',
+            toleranceElement: '> div',
+            protectRoot: true,
+            forcePlaceholderSize: true,
+            helper:	'clone',
+            opacity: .6,
+            placeholder: 'placeholder',
+            revert: 250,
+            tabSize: 25,
+            maxLevels: 0,
+            isTree: true,
+            expandOnHover: 700,
+            startCollapsed: true
+        });
+        jQuery('.disclose').on('click', function() {
+            jQuery(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
+        });
+
+        jQuery('#save').click(function() {
+            new Ajax.Request('<?php echo Mage::helper("adminhtml")->getUrl('*/*/save', array('_current'=>true)); ?>',{
+                parameters: {menu: generateArray()},
+                onComplete: function(response) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    showMessage(response[0], response[1]);
+                }
+            });
+
+        });
+
+        jQuery('#delete').click(function() {
+            new Ajax.Request('<?php echo Mage::helper("adminhtml")->getUrl('*/*/delete', array('_current'=>true)); ?>',{
+                onComplete: function(response) {
+                    location.reload();
+                }
+            });
+
+        });
+
+        jQuery('#menu').removeClass('mjs-nestedSortable-leaf').addClass('mjs-nestedSortable-expanded').addClass('mjs-nestedSortable-branch');
+
+        jQuery('#smenu span.title').after(getToolButtons());
+
+    });
+    var i = 1;
+    jQuery('.sortable li').each(function () {
+        if(jQuery(this).attr('id') == false) {
+            jQuery(this).attr('id', 'item'+i);
+            i++;
+        }
+    });
+
+    jQuery('#create_custom_link').click(function()
+        {
+            var newSortable = '<li class="scustom " mtitle="#title#" murl="#url#" mtype="3" mid="" style="display: list-item;"><div><span class="disclose"><span></span></span><span class="title">#title#</span></div></li>'
+            newSortable = newSortable.replace(/#url#/g, jQuery('#custom_link_url').val());
+            newSortable = newSortable.replace(/#title#/g, jQuery('#custom_link_title').val());
+            jQuery('#scustom').append(newSortable);
+        }
+    )
+
+
+    function showMessage(txt, type) {
+        var html = '<ul class="messages"><li class="'+type+'-msg"><ul><li>' + txt + '</li></ul></li></ul>';
+        jQuery('#messages')
+            .hide()
+            .fadeIn()
+            .html(html)
+            .delay(5000)
+            .fadeOut();
+    }
+
+    function generateArray() {
+        var menuArr = [];
+        var i = 1;
+        jQuery('#smenu li').each(function() {
+            var generateNav = '';
+            var url = "";
+
+            if(jQuery(this).attr('mtype') != 3){
+                jQuery(this).parents('li.menuitem').not(jQuery('#smenu')).each(function ()
+                {
+                    if(jQuery(this).attr('murl')) {
+                        url = jQuery(this).attr('murl') + "/" + url;
+                    }
+                });
+            }
+
+            generateNav += jQuery(this).parent().children('li.menuitem').index(jQuery(this))+1+"-";
+
+            url += jQuery(this).attr('murl');
+
+            var islast      = false;
+            if(jQuery(this).parent().children('li.menuitem').length-1 == jQuery(this).parent().children('li.menuitem').index(jQuery(this))) {
+                islast = 1;
+            }
+
+            var depth       = jQuery(this).parents('ol').length;
+            var title       = jQuery(this).attr('mtitle');
+            var index       = jQuery(this).parent().children('li.menuitem').index(jQuery(this));
+            var id          = jQuery(this).attr('mid');
+            var type        = jQuery(this).attr('mtype');
+            var haschildren = jQuery(this).children('ol').children().length;
+            var nestedUrl   = jQuery(this).attr('mrewrite');
+            var nav         = generateNav;
+            var link        = jQuery(this).attr('murl');
+            var customTitle = jQuery(this).attr('usecustomtitle');
+
+            menuArr.push({
+                depth: depth,
+                drawNumber: i,
+                index: index,
+                title: title,
+                id: id,
+                type: type,
+                hasChildren: haschildren,
+                nav: nav,
+                isLast:islast,
+                link: link,
+                deepLink: url,
+                useDeepLink: nestedUrl,
+                useCustomTitle: customTitle
+            });
+            i++;
+        });
+        return JSON.stringify(menuArr);
+    };
+
+    function showItemDetails(btn) {
+        var details;
+        var menuItem = jQuery(btn).closest('li.menuitem');
+
+        //if details div already exists, use that one
+        if(menuItem.children('.mItemDetails').length) {
+            details = menuItem.children('.mItemDetails');
+        }else{
+            //create new details div
+            var details = jQuery(getItemDetailsHtml(menuItem));
+        }
+        menuItem.children('div').first().after(details);
+        updateCustomTitleEditable();
+        if(details.is(':hidden')) {
+            details.fadeIn();
+        }else{
+            details.fadeOut();
+        }
+    }
+
+    function getItemDetailsHtml(item) {
+        var html = '<div class="mItemDetails"><div><table cellpadding="2">';
+
+        var urltext;
+        var typeTitle;
+        var type = item.attr('mtype');
+        var urlEditable = " disabled='disabled' ";
+
+        if(type == 1){
+            typeTitle = "Category";
+            urltext = 'URL Key ';
+        }
+        if(type == 2){
+            typeTitle = "CMS Page";
+            urltext = 'URL Key ';
+        }
+        if(type == 3){
+            typeTitle = "Custom Link";
+            urltext = 'Full URL ';
+            urlEditable = "";
+        }
+        if(type == 4){
+            typeTitle = "Product";
+            urltext = 'URL Key ';
+        }
+
+        if(item.attr('mtype') != "3"){
+            html += "<tr><td><label>Original Title </label></td><td><input disabled='disabled' class='' value='" + item.attr('moriginaltitle') + "' /></td></tr>";
+        }
+        html += "<tr><td><label>Custom Title </label></td><td style='position:relative'><input class='mtitle' value='" + item.attr('mtitle') + "' />";
+        
+        if(item.attr('mtype') != "3"){
+            var checked = " checked='checked' ";
+            if(item.attr('usecustomtitle') != '1'){
+                checked = '';
+            }
+            html += "<span class='input-addon'><input title='check this box to use a custom title' onclick='updateCustomTitleEditable()' class='useCustomTitle' type='checkbox' " + checked + "/></span>";
+        }
+        html += "</td></tr>";
+        html += "<tr><td><label>" + urltext + "</label></td><td><input " + urlEditable + " class='murl' value='" + item.attr('murl') + "' /></td></tr>";
+
+        html += "<tr><td><label>Item Type </label></td><td><p>" + typeTitle + "</p></td></tr>";
+
+        if(type != 3){
+            var checked = "";
+            if(typeof item.attr('mrewrite') !== "undefined" && item.attr('mrewrite') == 1){
+                checked = " checked='checked' ";
+            }
+            html += "<tr><td><label>Nested URL <span onclick='showNestedUrlInfo()' class='link-store-scope' /> </label></td><td><input type='checkbox' class='mrewrite' " + checked + " /></td></tr>";
+        }
+
+        html += "<tr><td></td><td><button onclick='saveItemChanges(this)' type='button'>Update Item</button></td></tr>";
+
+
+        html += '</table></div></div>';
+        return html;
+    }
+
+    function saveItemChanges(btn) {
+        var listItem = jQuery(btn).closest('li.menuitem');
+        var originalTitle = listItem.attr('mtitle');
+
+        listItem.attr('mtitle', listItem.find('input.mtitle').first().val());
+
+        listItem.attr('murl', listItem.find('input.murl').first().val());
+
+        var rewrite = 0;
+        if(listItem.find('input.mrewrite').first().is(':checked')){
+            rewrite = 1;
+        }
+        listItem.attr('mrewrite', rewrite);
+
+        var useCustomTitle = listItem.find('input.useCustomTitle').is(':checked');
+        if(listItem.attr('mtype') == 3){
+            useCustomTitle = true;
+        }
+        if(useCustomTitle){
+            listItem.attr('usecustomtitle','1');
+        }else{
+            listItem.attr('usecustomtitle','0');
+        }
+        
+        var titleText = listItem.find('input.mtitle').first().val();
+        if(!useCustomTitle){
+            titleText = listItem.attr('moriginaltitle');
+        }
+        var title = listItem.find('span.title').first().text(titleText);
+
+        showMenuMessage("Item successfully updated", "success");
+
+        setTimeout(function() {
+            hideMenuMessage();
+        },5000)
+
+        if(title.text() != originalTitle) {
+            title.addClass('animated fadeIn');
+            setTimeout(function() {
+                title.removeClass('animated fadeIn');
+            },3000)
+        }
+    }
+
+    function addCmsPages() {
+        jQuery('.dropLocation').remove();
+
+        //get checked values
+        var pageIds = easymenu_cms_page_grid_massactionJsObject.getCheckedValues();
+
+        var idsArray = explode(',', pageIds);
+
+        var sortableHtml = '';
+        for(i = 0;i < idsArray.length; i++){
+            if(idsArray[i] == ""){
+                continue;
+            }
+            sortableHtml += getItemHtml(2,idsArray[i],cmsPageDetails[idsArray[i]].title,cmsPageDetails[idsArray[i]].url);
+        }
+
+        itemsToDrop = sortableHtml;
+        currentGrid = 'easymenu_cms_page';
+
+        showDropLocations();
+    }
+
+    function addProducts() {
+       jQuery('.dropLocation').remove();
+
+        //get checked values
+        var productIds = easymenu_select_products_grid_massactionJsObject.getCheckedValues();
+
+        var idsArray = explode(',', productIds);
+
+        var sortableHtml = '';
+        for(i = 0;i < idsArray.length; i++){
+            if(idsArray[i] == ""){
+                continue;
+            }
+            sortableHtml += getItemHtml(4,idsArray[i],productDetails[idsArray[i]].name,productDetails[idsArray[i]].url_key);
+        }
+
+        itemsToDrop = sortableHtml;
+        currentGrid = 'easymenu_select_products';
+
+        showDropLocations();
+
+    }
+
+    function addCategories() {
+        jQuery('.dropLocation').remove();
+
+        //get checked values
+        var catIds = jQuery('#product_categories').val();
+
+        var ids = explode(',', catIds);
+
+        //filter out duplicates
+        var idsArray = [];
+        ids.forEach(function(item) {
+            if(item == ""){
+                return;
+            }
+            if(idsArray.indexOf(item) < 0) {
+                idsArray.push(item);
+            }
+        });
+
+        if(!idsArray.length){
+            return;
+        }
+
+
+        var sortableHtml = '';
+        for(i = 0;i < idsArray.length; i++){
+            if(idsArray[i] == ""){
+                continue;
+            }
+            sortableHtml += getItemHtml(1,idsArray[i],categoryDetails[idsArray[i]].name,categoryDetails[idsArray[i]].url_key);
+        }
+
+        itemsToDrop = sortableHtml;
+
+        currentGrid = 'categories';
+
+        showDropLocations();
+    }
+
+    function addCustomLink(){
+        if(jQuery('#cLinkTitle').val() == ""){
+            jQuery('#cLinkTitle')
+                .css('border-color', 'rgb(240, 82, 82)')
+                .css('background-color', '#FFF2F2')
+            ;
+            return false;
+        }
+
+        jQuery('#cLinkTitle')
+            .css('border-color', '#D2CCBA')
+            .css('background-color', '#FFF')
+
+        var sortableHtml = getItemHtml(3,'',jQuery('#cLinkTitle').val(),jQuery('#cLinkUrl').val());
+        itemsToDrop = sortableHtml;
+        currentGrid = 'custom';
+        showDropLocations();
+    }
+
+    function getItemHtml(type,typeId,name,url) {
+        var cssClass;
+        if(type === 1){
+            cssClass = 'cat';
+        }
+        if(type === 2){
+            cssClass = 'cms';
+        }
+        if(type === 3){
+            cssClass = 'link';
+        }
+        if(type === 4){
+            cssClass = 'product';
+        }
+        return '<li class="' + cssClass + ' animated pulse menuitem" mtitle="' + name + '" moriginaltitle="' + name + '" mtype="' + type + '" mid="' + typeId + '" murl="' + url + '" mrewrite="0" usecustomtitle="0" style="display: list-item;"><div><span class="title">' + name +'</span>' + getToolButtons() +'</div></li>';
+    }
+
+    function getToolButtons() {
+        var buttons = "<div class='tbuttonwrap'>";
+        buttons    +=  "<div class='tbutton remove' onclick='removeItem(this)'><i class='fa fa-times'></i></div>";
+        buttons    +=  "<div class='tbutton edit' onclick='showItemDetails(this)'><i class='fa fa-pencil'></i></div>";
+        buttons    += "</div>";
+        return buttons;
+    }
+
+    function removeItem(btn){
+        btn = jQuery(btn);
+        //get list item
+        var listItem = btn.closest('li.menuitem');
+        if(listItem.find('li.menuitem').length){
+            //has children
+            var sibl = listItem.prev();
+            if(sibl.length){
+                //move children to sibling
+                if(sibl.children('ol').length == 0){
+                    sibl.append('<ol />');
+                }
+                listItem.children('ol').children().appendTo(sibl.children('ol'));
+            }else{
+                //move children to parent
+                var prnt = listItem.closest('ol');
+                listItem.children('ol').children().appendTo(prnt);
+            }
+        }
+
+        listItem.remove();
+
+    }
+
+    function showDropLocations(){
+        showMenuMessage("Move your mouse over the menu below to insert the new item(s) or <a href='#' onclick='cancelAdd()'>cancel</a>.", 'notice');
+        jQuery('.mItemDetails').remove();
+        jQuery('#smenu li>div').after("<div class='dropLocation' style='display:none'><span onclick='addSiblingAbove(this)' class='droplink'><i class='icon-up-thin'></i> Insert above</span>  <span onclick='addSiblingBelow(this)' class='droplink'><i class='icon-down-thin'></i> Insert below</span> <span onclick='addChild(this)' class='droplink' style='float:right;'><i class='icon-level-down-1'></i> Insert as sub item</span></div>")
+        jQuery('#smenu li>div').each(function() {
+            jQuery(this).mouseenter(function() {
+                jQuery(this).next('.dropLocation').show();
+            });
+            jQuery(this).mouseleave(function() {
+                jQuery(this).next('.dropLocation').hide();
+            });
+        })
+        jQuery('.dropLocation').mouseenter(function() {
+            jQuery(this).show();
+        })
+        jQuery('.dropLocation').mouseleave(function() {
+            jQuery(this).hide();
+        });
+
+        //if no menu items exist
+        if(!jQuery('#smenu ol').children().length){
+            jQuery('#smenu').append('<ol>' + itemsToDrop + '</ol>');
+            successAddMsg();
+            refreshGrid();
+        }
+    }
+
+    function addChild(location) {
+        var mItem = jQuery(location).parent();
+        if(mItem.next().is('ol')){
+            mItem.next().prepend(itemsToDrop);
+        }else{
+            mItem.after('<ol>' + itemsToDrop + '</ol>');
+        }
+        jQuery('.dropLocation').remove();
+        successAddMsg();
+        refreshGrid();
+    }
+
+    function addSiblingAbove(location) {
+        var mItem = jQuery(location).parents('li').eq(0);
+        mItem.before(itemsToDrop);
+        jQuery('.dropLocation').remove();
+        successAddMsg();
+        refreshGrid();
+    }
+
+    function addSiblingBelow(location) {
+        var mItem = jQuery(location).parents('li').eq(0);
+        mItem.after(itemsToDrop);
+        jQuery('.dropLocation').remove();
+        successAddMsg();
+        refreshGrid();
+    }
+
+    function successAddMsg() {
+        showMenuMessage("Successfully added the new item(s) to the menu!", 'success');
+        setTimeout(function() {
+            jQuery('#smenu .animated').removeClass('animated').removeClass('pulse');
+        },1000)
+        setTimeout(function() {
+            hideMenuMessage();
+        },5000)
+    }
+
+    function refreshGrid() {
+
+        if(currentGrid == "categories"){
+            //reset category checkboxes
+            jQuery('#product_categories').val('');
+            jQuery('#product-categories input:checked').attr('checked', false);
+        }else if(currentGrid == 'custom'){
+            jQuery('#cLinkTitle').val('');
+            jQuery('#cLinkUrl').val('');
+        }else{
+            //reset checked values
+            window[currentGrid + '_grid_massactionJsObject'].setCheckedValues("");
+
+            //update grid
+            window[currentGrid + '_gridJsObject'].reload();
+        }
+    }
+
+    function showMenuMessage(txt, type) {
+        var html = '<ul class="messages"><li class="'+type+'-msg"><ul><li>' + txt + '</li></ul></li></ul>';
+        jQuery('#addMessages')
+            .hide()
+            .fadeIn()
+            .html(html);
+    }
+
+    function hideMenuMessage(){
+        jQuery('#addMessages ul').fadeOut();
+    }
+
+    //build item details array based on grid contents
+    Ajax.Responders.register({
+        onComplete: function() {
+            updateProductDetails();
+            updateCmsPageDetails();
+        }
+    });
+
+    function updateProductDetails() {
+        jQuery('#easymenu_select_products_grid_table tbody tr').each(function () {
+            productDetails[jQuery.trim(jQuery(this).find('.entity_id').text())] = {
+                name: jQuery.trim(jQuery(this).find('.name').text()),
+                url_key: jQuery.trim(jQuery(this).find('.url_key').text())
+            };
+        });
+    }
+
+    function updateCmsPageDetails() {
+        jQuery('#easymenu_cms_page_grid_table tbody tr').each(function () {
+            cmsPageDetails[jQuery.trim(jQuery(this).find('input').val())] = {
+                title: jQuery.trim(jQuery(this).find('.cat_title').text()),
+                url: jQuery.trim(jQuery(this).find('.cat_url').text())
+            };
+        });
+    }
+
+    function updateCatagoryDetails() {
+        categoryDetails = <?php echo $this->getCategoriesJSON(); ?>
+    }
+
+
+
+    //PHP JS
+    function explode(delimiter, string, limit) {
+        //  discuss at: http://phpjs.org/functions/explode/
+        // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+        //   example 1: explode(' ', 'Kevin van Zonneveld');
+        //   returns 1: {0: 'Kevin', 1: 'van', 2: 'Zonneveld'}
+
+        if (arguments.length < 2 || typeof delimiter === 'undefined' || typeof string === 'undefined') return null;
+        if (delimiter === '' || delimiter === false || delimiter === null) return false;
+        if (typeof delimiter === 'function' || typeof delimiter === 'object' || typeof string === 'function' || typeof string ===
+            'object') {
+            return {
+                0: ''
+            };
+        }
+        if (delimiter === true) delimiter = '1';
+
+        // Here we go...
+        delimiter += '';
+        string += '';
+
+        var s = string.split(delimiter);
+
+        if (typeof limit === 'undefined') return s;
+
+        // Support for limit
+        if (limit === 0) limit = 1;
+
+        // Positive limit
+        if (limit > 0) {
+            if (limit >= s.length) return s;
+            return s.slice(0, limit - 1)
+                .concat([s.slice(limit - 1)
+                    .join(delimiter)
+                ]);
+        }
+
+        // Negative limit
+        if (-limit >= s.length) return [];
+
+        s.splice(s.length + limit);
+        return s;
+    }
+
+    function showNestedUrlInfo(){
+        var nestedUrlInfoWindow = new Window({className:'magento',
+            title:'Nested URL Rewrites',
+            width:900,
+            height:500,
+            minimizable:false,
+            maximizable: false
+        });
+        nestedUrlInfoWindow.showCenter(true);
+        nestedUrlInfoWindow.getContent().update(jQuery('.nestedRewriteInfo').html());
+        nestedUrlInfoWindow.setZIndex(20);
+    }
+
+    function loadDefaultCategories() {
+        var c = confirm("Are you sure? This will replace the existing menu with the default category menu for this store view.");
+        if(c == true) {
+            jQuery('#smenu>ol').remove();
+            jQuery('#smenu').append(jQuery('#defaultCategories').html());
+            jQuery('#smenu span.title').after(getToolButtons());
+            showMenuMessage("Menu successfully updated",'success');
+            jQuery('#smenu>ol').addClass('animated fadeIn');
+            setTimeout(function() {
+                jQuery('#smenu>ol').removeClass('animated fadeIn');
+                hideMenuMessage();
+            },4000)
+        }
+    }
+
+    function copyStoreMenu() {
+        var c = confirm("Are you sure? This will replace the existing menu with the menu of the selected store view.");
+
+        if(c == true) {
+            new Ajax.Request('<?php echo Mage::helper("adminhtml")->getUrl('*/*/copystoremenu', array('_current'=>true)); ?>',{
+                parameters: {fromStore: <?php echo $this->getStoreId();?>,toStore:jQuery('#loadStoreMenu').val()},
+                onComplete: function(response) {
+                    var response = jQuery.parseJSON(response.responseText);
+
+                    //show message
+                    showMenuMessage(response.message,response.status);
+                    setTimeout(function() {
+                        hideMenuMessage();
+                    },4000)
+
+                    //update menu
+                    if(typeof response.html !== "undefined"){
+                        jQuery('#smenu>ol').remove();
+                        jQuery('#smenu').append(response.html);
+                        jQuery('#smenu span.title').after(getToolButtons());
+                        jQuery('#smenu>ol').addClass('animated fadeIn');
+                        setTimeout(function() {
+                            jQuery('#smenu>ol').removeClass('animated fadeIn');
+                        },4000)
+                    }
+                }
+            });
+        }
+    }
+
+    function cancelAdd() {
+        jQuery('.dropLocation').remove();
+        refreshGrid();
+        showMenuMessage("Adding items has been canceled", 'notice');
+        setTimeout(function() {
+            hideMenuMessage();
+        },5000)
+    }
+    
+    function updateCustomTitleEditable()
+    {
+        jQuery('input.useCustomTitle').each(function(){
+            if(jQuery(this).is(':checked')){
+                jQuery(this).closest('td').find('.mtitle').attr('disabled',false);
+//                jQuery(this).closest('li').attr('usecustomtitle','1');
+            }else{
+                jQuery(this).closest('td').find('.mtitle').attr('disabled',true);
+//                jQuery(this).closest('li').attr('usecustomtitle','0');
+            }
+        })
+    }
+
+
+
+</script>

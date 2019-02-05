@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of Easy Menu, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+-->
+<layout version="0.1.0">
+  <adminhtml_easymenubackend_index>
+      <reference name="head">
+          <action method="addJs"><script>plugincompany/jquery-1.9.1.js</script></action>
+          <action method="addJs"><script>plugincompany/jquery-ui-1.10.3.custom.min.js</script></action>
+          <action method="addJs"><script>plugincompany/lib/iontabs/js/ion-tabs/ion.tabs.min.js</script></action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>plugincompany/easymenu/fontello/css/fontello.css</name>
+          </action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>plugincompany/lib/fontawesome/css/font-awesome.min.css</name>
+          </action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>plugincompany/lib/animate.css</name>
+          </action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>plugincompany/lib/iontabs/css/ion.tabs.css</name>
+          </action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>plugincompany/lib/iontabs/css/ion.tabs.skinBordered.css</name>
+          </action>
+          <action method="addItem">
+              <type>js_css</type>
+              <name>prototype/windows/themes/default.css</name>
+          </action>
+          <action method="addCss">
+              <name>lib/prototype/windows/themes/magento.css</name>
+          </action>
+          <action method="addJs"><script>plugincompany/jquery.mjs.nestedSortable.js</script></action>
+      </reference>
+	<reference name="content">
+        <block type="adminhtml/store_switcher" name="storeswitch" template="store/switcher.phtml">
+            <action method="hasDefaultOption">
+                <default>0</default>
+            </action>
+        </block>
+        <block type="core/template" template="easymenu/controls.phtml" />
+	  <block type="easymenu/adminhtml_easymenubackend" name="easymenubackend" template="easymenu/easymenubackend.phtml"/>
+	</reference>
+  </adminhtml_easymenubackend_index>
+</layout>

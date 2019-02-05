@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of Easy Menu, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+?>
+<?php if($this->hasNotifications()):?>
+    <?php foreach ($this->getNotifications() as $notification) { ?>
+        <div class="notification-global <?php if(!$notification->getImportant()){?> notification-global-notice <?php } ?>">
+            <?php echo $this->helper('plugincompany_notifications')->__(
+                $notification->getContent(),
+                $this->getUrl('plugincompany_notifications/index/goUrl', array('id' => $notification->getId()))
+            );?>
+        </div>
+    <?php } ?>
+<?php endif;?>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Plugincompany_Notifications>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Plugincompany_Notifications>
+    </modules>
+</config>

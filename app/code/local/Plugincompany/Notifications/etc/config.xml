@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of Easy Menu, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+-->
+<config>
+    <modules>
+        <Plugincompany_Notifications>
+            <version>0.1.0</version>
+        </Plugincompany_Notifications>
+    </modules>
+    <global>
+        <models>
+            <plugincompany_notifications>
+                <class>Plugincompany_Notifications_Model</class>
+                <resourceModel>plugincompany_notifications_resource</resourceModel>
+            </plugincompany_notifications>
+            <plugincompany_notifications_resource>
+                <class>Plugincompany_Notifications_Model_Resource</class>
+                <entities>
+                    <notifications>
+                        <table>plugincompany_notifications</table>
+                    </notifications>
+                </entities>
+            </plugincompany_notifications_resource>
+        </models>
+        <blocks>
+            <plugincompany_notifications>
+                <class>Plugincompany_Notifications_Block</class>
+            </plugincompany_notifications>
+        </blocks>
+        <helpers>
+            <plugincompany_notifications>
+                <class>Plugincompany_Notifications_Helper</class>
+            </plugincompany_notifications>
+        </helpers>
+        <resources>
+            <plugincompany_notifications_setup>
+                <setup>
+                    <module>Plugincompany_Notifications</module>
+                </setup>
+            </plugincompany_notifications_setup>
+        </resources>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <plugincompany_notifications>
+                    <file>plugincompany_notifications.xml</file>
+                </plugincompany_notifications>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <plugincompany_notifcations>
+                <use>admin</use>
+                <args>
+                    <module>Plugincompany_Notifications</module>
+                    <frontName>plugincompany_notifications</frontName>
+                </args>
+            </plugincompany_notifcations>
+        </routers>
+    </admin>
+</config>

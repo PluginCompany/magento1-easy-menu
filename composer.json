@@ -1,0 +1,15 @@
+{
+    "name": "plugincompany/magento1-easy-menu",
+    "description": "Easy Menu for Magento 1 / OpenMage",
+    "type": "magento-module",
+    "license": "MIT",
+    "homepage": "https://plugin.company/magento1-extensions/easy-menu.html",
+    "support": {
+        "issues": "https://github.com/PluginCompany/magento1-easy-menu/issues",
+        "source": "https://github.com/PluginCompany/magento1-easy-menu"
+    },
+    "version": "1.1.3",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
